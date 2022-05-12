@@ -1,0 +1,23 @@
+<div class="container mt-4 d-flex flex-column justify-content-center">
+    <h2 style="display: block;">Update Course</h2>
+    <form method="POST" action="/course/{{course._id}}?_method=PUT">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" value="{{course.name}}" name="name">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Deccription</label>
+    <input type="text" class="form-control" value="{{course.description}}" id="exampleInputPassword1" name="decscription">
+  </div>
+    <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Video Id</label>
+    <input type="text" class="form-control" value="{{course.videoId}}" id="exampleInputPassword1" name="videoId">
+  </div>
+    <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Level</label>
+    <input type="text" class="form-control" value="{{course.level}}" id="exampleInputPassword1" name="level">
+  </div>
+  
+  <button type="submit" class="btn btn-success">Save</button>
+</form>
+</div>

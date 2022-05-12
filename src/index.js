@@ -1,15 +1,28 @@
-import { engine } from 'express-handlebars';
-import express from 'express';
-import morgan from 'morgan';
-import path from 'path';
-import route from './routes/index.js';
+// import engine  from 'express-handlebars';
+const { engine } = require('express-handlebars');
+// import express from 'express';
+const express = require('express');
 
-// const express = require('express');
-// const morgan = require('morgan');
-import { fileURLToPath } from 'url';
-import { query } from 'express';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// import morgan from 'morgan';
+const morgan = require('morgan');
+// import path from 'path';
+
+const path = require('path');
+// import route from './routes/index.js';
+
+const route = require('./routes/index');
+
+// import { fileURLToPath } from 'url';
+const fileURLToPath = require('url');
+
+var methodOverride = require('method-override');
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+// connect db
+const db = require('./config/db/connect');
+db.connect();
 
 let app = express();
 let port = 3000;
@@ -22,16 +35,22 @@ app.use(
     }),
 );
 app.use(express.json());
+app.use(methodOverride('_method'));
 
 // view engine
 app.engine(
     'hbs',
     engine({
         extname: 'hbs',
+        helpers: {
+            sum(a, b) {
+                return a + b;
+            },
+        },
     }),
 );
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
+app.set('views', path.join(__dirname, 'resources', 'views'));
 
 // app.use(morgan('combined'));
 
@@ -40,5 +59,5 @@ app.set('views', path.join(__dirname, 'resources/views'));
 route(app);
 
 app.listen(port, () => {
-    console.log('App listen port ' + port);
+    console.log('App listening port ' + port);
 });

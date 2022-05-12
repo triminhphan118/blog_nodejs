@@ -2,11 +2,10 @@
 const express = require('express');
 
 // import siteController from '../app/controllers/SiteController.js';
-const siteController = require('../app/controllers/SiteController');
+const meController = require('../app/controllers/MeController');
 
 const router = express.Router();
-
-router.get('/search', siteController.search);
-router.get('/', siteController.home);
+router.get('/stored/courses', meController.stored_courses);
+router.get('/trash/courses', meController.trash_courses);
 
 module.exports = router;

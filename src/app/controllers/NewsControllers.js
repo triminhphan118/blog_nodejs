@@ -9,4 +9,4 @@ class NewsController {
     }
 }
 const newsController = new NewsController();
-export default newsController;
+module.exports = newsController;

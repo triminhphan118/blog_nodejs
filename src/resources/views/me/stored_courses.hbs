@@ -1,0 +1,68 @@
+<div class="container mt-4">
+    <h4>List Courses</h4>
+    <a href="/me/trash/courses" class="btn btn-info mb-4">Recycle Bin</a>
+    <table class="table table-bordered border-primary">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Level</th>
+            <th scope="col" colspan="2"> Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each course}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.level}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/course/edit/{{this._id}}" class="btn btn-warning">Update</a>
+                    <a href="/course/{{this._id}}?_method=DELETE" data-bs-toggle="modal" data-bs-target="#delete-course" data-id="{{this._id}}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <th colspan="5" class="text-center">You have not registered any courses yet.<a href="/course/create"> Add now!</a></th>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<form name="delete-course" method="POST"></form>
+
+{{!-- confirm delete modal --}}
+<div class="modal fade" id="delete-course" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">you want to delete?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        you definitely want to delete.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="delete" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+        var exampleModal = document.getElementById('delete-course')
+        var recipient;
+            exampleModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget
+            recipient = button.getAttribute('data-id')   
+        })
+        const btnDelete = document.getElementById('delete');
+        btnDelete.addEventListener('click', () => {
+            const form = document.querySelector('form[name=delete-course]');
+           form.action = '/course/' + recipient + '?_method=DELETE';
+           form.submit();
+        })
+
+</script>
